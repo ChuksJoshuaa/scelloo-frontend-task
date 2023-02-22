@@ -40,3 +40,7 @@ a {
   width: 90%;
   margin: 0 auto;
 }
+
+.image {
+  background-image: url('https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082472/down-arrow_ic4hw3.png');
+}

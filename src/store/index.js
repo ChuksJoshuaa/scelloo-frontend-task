@@ -30,6 +30,20 @@ const store = createStore({
       return state.infoData;
     },
   },
+
+  actions: {
+    changePaymentStatus(state, payload) {
+      console.log("changePaymentStatus");
+      if (payload === "All") {
+        return (state.data = UserData);
+      } else {
+        const newItem = UserData.filter(
+          (item) => item.payment_status === payload
+        );
+        return (state.data = newItem);
+      }
+    },
+  },
 });
 
 export default store;

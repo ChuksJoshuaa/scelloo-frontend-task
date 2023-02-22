@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.16",
     "@volar-plugins/vetur": "^0.1.0",
     "D": "^1.0.0",
     "vue": "^3.2.45",

@@ -1,11 +1,15 @@
 <template>
-    <div class="bg-white h-screen w-full">
+    <div class="bg-white h-full w-full">
         <div class="flex flex-wrap justify-between p-3 relative">
-            <div class="w-1/2">
-                <button  class="border border-[#C6C2DE] p-3 text-xl mr-4 rounded-lg w-24 text-[#25213B]" @click="chooseButton">
-                    <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060094/filter_r9w0yl.png" class="inline-block"/> Filter</button>
-                <input class="p-3 pl-12 w-4/5 bg-gray-100 outline-0 focus:outline-0 hover:border hover:border-[#6D5BD0] rounded-lg" placeholder="Search User by Name, Email or Date">
-                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060122/search_rstzys.png" class="relative -top-8 left-32 z-50">
+            <div class="flex mb-2">
+                <button  class="border border-[#C6C2DE] h-[50px] text-xl mr-4 rounded-lg w-24 text-[#25213B]" @click="chooseButton">
+                    <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060094/filter_r9w0yl.png" class="inline-block"/>
+                     Filter
+                </button>
+                <div class="relative">
+                    <input class="p-3 pl-12 min-w-[200px] w-[250px] md:w-[550px] bg-gray-100 outline-0 focus:outline-0 hover:border hover:border-[#6D5BD0] rounded-lg" placeholder="Search User by Name, Email or Date">
+                    <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060122/search_rstzys.png" class="absolute top-3 left-2 z-50">
+                </div>
             </div>
             <div v-if="showFilter" class="absolute z-40 bg-white border-2 border-gray-200 shadow w-[230px] h-auto mt-[8em] ml-[5em]">
                 <h2 class="py-3 px-3 text-sm md:text-lg uppercase">Sort by:</h2>
@@ -18,7 +22,7 @@
                         </span>
                     </div>
                 </div>
-                <h2 class="py-3 px-3 text-sm md:text-lg uppercase">Users</h2>
+                <h2 class="py-3 px-3 text-sm md:text-lg uppercase">Users:</h2>
                 <div>
                     <div v-for="item in getInfoData" :key="item.id" class="px-3 flex justify-between mb-2 py-1  text-sm md:text-md" :class="item.name === activeUsers ? `${activeColor}`:''"
                     @click="changeActiveUsers" @keypress="changeActiveUsers" 
@@ -35,21 +39,28 @@
                 <button class="p-3 bg-[#6D5BD0] text-white font-medium rounded-lg">PAY DUES</button>
             </div>
         </div>
+
+        <UserContent :data="data"/>
     </div>
 </template>
 
 
 <script>
 import { mapGetters } from "vuex";
+import UserContent from "./UserContent.vue";
 
 export default {
-    name: "BodyContent",
+    name: "Body",
+
+    components: { UserContent },
+
+    props: ["data"],
 
     data() {
         return {
             showFilter: false,
             chosenSort: '',
-            activeUsers: "",
+            activeUsers: '',
             sortColor: '',
             activeColor: ''
         }
@@ -61,7 +72,7 @@ export default {
         this.activeUsers = "All"
     },
 
-    computed: mapGetters(["getSortData", "getInfoData"]),
+    computed: mapGetters(["getSortData", "getInfoData", "getUserData"]),
 
     methods: {
         closeFilterButton() {
