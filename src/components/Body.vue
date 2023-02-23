@@ -36,25 +36,24 @@
                 </div>
             </div>
             <div class="">
-                <button class="p-3 bg-[#6D5BD0] text-white font-medium rounded-lg">PAY DUES</button>
+                <button class="p-3 bg-[#6D5BD0] text-white font-medium rounded-lg" @click="yes">PAY DUES</button>
             </div>
         </div>
 
-        <UserContent :data="data"/>
+        <UserContent :data="getUserData"/>
     </div>
 </template>
 
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import UserContent from "./UserContent.vue";
+import { UserData } from "../utils/userData";
 
 export default {
     name: "Body",
 
     components: { UserContent },
-
-    props: ["data"],
 
     data() {
         return {
@@ -78,6 +77,7 @@ export default {
     computed: mapGetters(["getSortData", "getInfoData", "getUserData"]),
 
     methods: {
+         ...mapActions(["setData"]),
         closeFilterButton() {
             this.showFilter = false
         },
@@ -117,7 +117,15 @@ export default {
 
 
         searchInput() {
-            console.log(this.searchText)
+            let check = UserData
+            if (this.searchText.length == 0) {
+                this.setData(check)
+            } else {
+                let regsearch = new RegExp(`${this.searchText}`, 'gi')
+                check = check.filter((x) => x.first_name.match(regsearch) || x.last_name.match(regsearch) || x.email.match(regsearch) || x.payment_date.match(regsearch) || x.due_date.match(regsearch))
+               this.setData(check)
+            }
+            
         }
 
         

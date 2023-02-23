@@ -32,6 +32,22 @@ const store = createStore({
   },
 
   actions: {
+    async setData({ commit }, payload) {
+      const newData = await payload;
+      commit("updateData", newData);
+    },
+
+    async changePayment({ commit }, payload) {
+      const newData = await payload;
+      commit("changePaymentStatus", newData);
+    },
+  },
+
+  mutations: {
+    updateData(state, payload) {
+      state.data = payload;
+    },
+
     changePaymentStatus(state, payload) {
       console.log("changePaymentStatus");
       if (payload === "All") {

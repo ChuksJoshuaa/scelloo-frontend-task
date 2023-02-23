@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="rounded-lg bg-white border border-gray-100 mt-7">
-      <Body :data="data"/>
+      <Body />
     </div>
   </div>
 </template>
@@ -33,24 +33,22 @@ export default {
   data() {
     return {
       chosenHeader: "",
-      data: []
     }
   },
 
-  computed: mapGetters(["getHeader", "getUserData"]),
+  computed: mapGetters(["getHeader"]),
 
   created() {
     this.chosenHeader = "All"
-    this.data = this.getUserData
   },
 
   methods: {
-    ...mapActions(["changePaymentStatus"]),
+    ...mapActions(["changePayment"]),
 
     async handle(e) {
       this.chosenHeader = e.target.value
 
-      await this.changePaymentStatus(this.chosenHeader).then((res) => this.data = res)
+      this.changePayment(this.chosenHeader)
     },
   }
 }
