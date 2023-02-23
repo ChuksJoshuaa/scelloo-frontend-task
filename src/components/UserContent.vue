@@ -2,7 +2,7 @@
 <template>
     <div class="">
      <div class="flex flex-nowrap bg-[#F4F2FF] p-4 px-0 border-y-1 border-[#D9D5EC] overflow-x-auto text-[#6E6893] font-medium">
-          <div class="w-1/3 overflow-x-auto text-sm md:text-lg px-3"><input type="checkbox" v-model="checkAll" class="p-2 w-5 h-5 rounded-md"/></div>
+          <div class="w-1/3 overflow-x-auto text-sm md:text-lg px-3"><input type="checkbox" v-model="allChecked" class="p-2 w-5 h-5 rounded-md"/></div>
           <div class="w-[65%] overflow-x-auto text-sm md:text-lg">NAME</div>
           <div class="w-[70%] overflow-x-auto text-sm md:text-lg">USER STATUS</div>
           <div class="w-[35%] overflow-x-auto text-sm md:text-lg">PAYMENT STATUS</div>
@@ -12,7 +12,8 @@
       </div>
       <div v-for="item in data" :key="item.id">
           <div class="flex flex-nowrap p-4 px-3 pt-3 overflow-x-auto border-b border-[#D9D5EC]" :class="showingdown && item.first_name === nameValue ? 'bg-[#F2F0F9]':''">
-              <div class="w-1/3 overflow-x-auto text-sm md:text-lg"><input type="checkbox" v-model="selected" class="p-2 w-5 h-5 rounded-md inline-block"/> 
+              <div class="w-1/3 overflow-x-auto text-sm md:text-lg">
+                <input type="checkbox" v-model="selected" :value="item"  class="p-2 w-5 h-5 rounded-md inline-block"/> 
                 <button class="inline-block ml-4 mt-3" :value="item.first_name" @click="toggleShow" v-if="showingdown && item.first_name === nameValue" @focus="toggleShow">
                   <img  src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082229/Up_sp1wbo.png"  class="-mt-3 ml-4 h-5 w-5 inline-block cursor-pointer"  /> 
                 </button>
@@ -84,9 +85,10 @@ export default {
     return {
       showingdown: false,
       showactions: false,
-      checkAll: false,
-      selected: "",
-      nameValue: ""
+      allChecked: false,
+      nameValue: "",
+      checkArray: [],
+      selected: []
     }
   },
 
@@ -94,14 +96,13 @@ export default {
 
    watch: {
     data: function () {
-      console.log(this.data)
+       console.log(this.data)
+     
      },
 
-     checkAll: function (check) {
-      this.selected = check
-    }
+    allChecked(val) { this.selected = val ? this.data.map(item => item) : [] }
   },
-
+  
   methods: {
     toggleShow(e) {
       const value = e.target.value
@@ -112,7 +113,7 @@ export default {
       else {
         this.showingdown = !this.showingdown
       }
-    }
+    },
   }
 }
 </script>

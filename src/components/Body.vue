@@ -7,7 +7,7 @@
                      Filter
                 </button>
                 <div class="relative">
-                    <input class="p-3 pl-12 min-w-[200px] w-[250px] md:w-[550px] bg-gray-100 outline-0 focus:outline-0 hover:border hover:border-[#6D5BD0] rounded-lg" placeholder="Search User by Name, Email or Date">
+                    <input v-model="searchText" @keyup="searchInput" class="p-3 pl-12 min-w-[200px] w-[250px] md:w-[550px] bg-gray-100 outline-0 focus:outline-0 hover:border hover:border-[#6D5BD0] rounded-lg" placeholder="Search User by Name, Email or Date">
                     <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060122/search_rstzys.png" class="absolute top-3 left-2 z-50">
                 </div>
             </div>
@@ -62,7 +62,8 @@ export default {
             chosenSort: '',
             activeUsers: '',
             sortColor: '',
-            activeColor: ''
+            activeColor: '',
+            searchText: '',
         }
     },
 
@@ -70,6 +71,8 @@ export default {
     created() {
         this.chosenSort = "Default"
         this.activeUsers = "All"
+
+        
     },
 
     computed: mapGetters(["getSortData", "getInfoData", "getUserData"]),
@@ -111,6 +114,11 @@ export default {
                 this.activeColor = ''
             }, 1000);
         },
+
+
+        searchInput() {
+            console.log(this.searchText)
+        }
 
         
 

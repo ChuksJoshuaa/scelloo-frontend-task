@@ -10,3 +10,4 @@ app.use(store);
 app.mount("#app");
 
 app.config.productionTip = false;
+app.config.devTools = true
