@@ -41,10 +41,19 @@ const store = createStore({
       const newData = await payload;
       commit("changePaymentStatus", newData);
     },
+
+    async changeSortAction({ commit }, payload) {
+      const newData = await payload;
+      commit("changeSortData", newData);
+    },
   },
 
   mutations: {
     updateData(state, payload) {
+      state.data = payload;
+    },
+
+    changeSortData(state, payload) {
       state.data = payload;
     },
 

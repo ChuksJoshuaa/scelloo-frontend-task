@@ -39,7 +39,7 @@ export const sortData = [
   },
   {
     id: UniqueID,
-    name: "Due Date",
+    name: "Email",
   },
   {
     id: UniqueID,

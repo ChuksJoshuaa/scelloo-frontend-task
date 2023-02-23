@@ -12,10 +12,16 @@
                 </div>
             </div>
             <div v-if="showFilter" class="absolute z-40 bg-white border-2 border-gray-200 shadow w-[230px] h-auto mt-[8em] ml-[5em]">
-                <h2 class="py-3 px-3 text-sm md:text-lg uppercase">Sort by:</h2>
+                <div class="flex justify-between py-3 px-3 items-center">
+                    <h2 class="text-sm md:text-lg uppercase">Sort by:</h2>
+                    <button @click="closeFilterButton" @focus="closeFilterButton">
+                        <img
+                       src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082323/close_o0kgvc.png" class="inline-block w-5 h-5" />
+                    </button>
+                </div>
                 <div class="border-b border-gray-400">
                     <div v-for="item in getSortData" :key="item.id" class="px-3 flex justify-between mb-2 py-1 text-sm md:text-md" :class="item.name === chosenSort ? `${sortColor}`:''"
-                        @click="changeSort" @keypress="changeSort">
+                        @click="changeSort" @keydown="changeSort">
                         <button class="capitalize cursor-pointer" :class="item.name === chosenSort ? 'font-semibold leading-2 text-gray-700':'font-medium text-gray-400'" :value="item.name">{{ item.name }}</button>
                         <span class="h-6 w-6 rounded-full p-2" :class="item.name === chosenSort ? 'bg-blue-400' : 'bg-white'">
                             <p class="h-1 w-1 rounded-full p-1 bg-white"></p>
@@ -25,7 +31,7 @@
                 <h2 class="py-3 px-3 text-sm md:text-lg uppercase">Users:</h2>
                 <div>
                     <div v-for="item in getInfoData" :key="item.id" class="px-3 flex justify-between mb-2 py-1  text-sm md:text-md" :class="item.name === activeUsers ? `${activeColor}`:''"
-                    @click="changeActiveUsers" @keypress="changeActiveUsers" 
+                    @click="changeActiveUsers" @keydown="changeActiveUsers" 
                     >
                         <button class="capitalize cursor-pointer"
                         :class="item.name === activeUsers ? 'font-semibold leading-2 text-gray-700' : 'font-medium text-gray-400'" :value="item.name">{{ item.name }}</button>
@@ -49,6 +55,7 @@
 import { mapGetters, mapActions } from "vuex";
 import UserContent from "./UserContent.vue";
 import { UserData } from "../utils/userData";
+import _ from "lodash"
 
 export default {
     name: "Body",
@@ -77,7 +84,7 @@ export default {
     computed: mapGetters(["getSortData", "getInfoData", "getUserData"]),
 
     methods: {
-         ...mapActions(["setData"]),
+         ...mapActions(["setData", "changeSortAction"]),
         closeFilterButton() {
             this.showFilter = false
         },
@@ -94,7 +101,24 @@ export default {
         changeSort(e) {
             this.chosenSort = e.target.value
 
-            console.log(this.chosenSort)
+            const chosenData = this.chosenSort
+
+            const sortData = _.sortBy(UserData, [
+                function (o) {
+                    if (chosenData === "First Name") {
+                         return o.first_name;
+                    }
+
+                    if (chosenData === "Last Name") {
+                        return o.last_name;
+                    }
+
+                    if (chosenData === "Email") {
+                        return o.email
+                    }
+                },])
+
+              this.changeSortAction(sortData)
 
             this.sortColor = 'bg-[#F4F2FF]'
 
