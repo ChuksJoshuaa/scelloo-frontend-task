@@ -103,7 +103,7 @@ export default {
       checkArray: [],
       selected: [],
       editName: "",
-      choseEditName: ""
+      choseEditName: "Edit"
     }
   },
 
