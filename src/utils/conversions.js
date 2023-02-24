@@ -1,29 +1,5 @@
 export const UniqueID = () => Math.floor(Math.random() * 1000000);
 
-export const PaymentStatusChangeColor = (status) => {
-  let color = "status-red";
-
-  if (status === "Paid") {
-    color = "status-green";
-  }
-
-  if (status === "Unpaid") {
-    color = "status-yellow";
-  }
-
-  return color;
-};
-
-export const UserStatusColor = (status) => {
-  let color = "user-status-blue";
-
-  if (status === "Inactive") {
-    color = "user-status-purple";
-  }
-
-  return color;
-};
-
 export const sortData = [
   {
     id: UniqueID,

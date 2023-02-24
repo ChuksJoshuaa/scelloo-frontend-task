@@ -34,11 +34,11 @@
               </div>
               <div class="w-1/4 overflow-x-auto text-md">{{ item.symbol }}{{ item.amount }} <br><span class="block pl-2 text-sm text-gray-400">{{ item.currency }}</span></div>
               <div class="w-1/3 overflow-x-auto">
-                  <button class="p-2 list-button w-full text-right text-[#6E6893] gap-4 rounded-md" variant="success" @click="showactions = !showactions">
-                  <span v-if="!showactions" class="inline-block mr-5">view more</span>
-                  <img v-if="!showactions" src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082353/More_v9ezsg.png" class="inline-block"/> <img v-if="showactions"
-                   src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082323/close_o0kgvc.png" class="inline-block w-5 h-5" /> </button><br>
-                 
+                <button class="p-2 list-button w-full text-right text-[#6E6893] gap-4 rounded-md" variant="success">
+                  <span  class="inline-block mr-5">view more</span>
+                  <img  src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082353/More_v9ezsg.png" class="inline-block"/> 
+                </button>
+                <!-- <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082323/close_o0kgvc.png" class="inline-block w-5 h-5" /> -->
               </div>    
           </div>
         
