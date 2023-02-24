@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { HeaderData } from "../utils/header";
 import { UserData } from "../utils/userData";
-import { sortData, infoData } from "../utils/conversions";
+import { sortData, infoData, editData } from "../utils/conversions";
 
 const store = createStore({
   state() {
@@ -12,6 +12,7 @@ const store = createStore({
       infoData: infoData,
       chosenHeaderData: "All",
       paymentStatusData: UserData,
+      editData: editData
     };
   },
 
@@ -38,6 +39,10 @@ const store = createStore({
 
     getPaymentStatusData(state) {
       return state.paymentStatusData;
+    },
+
+    getEditData(state) {
+      return state.editData;
     },
   },
 

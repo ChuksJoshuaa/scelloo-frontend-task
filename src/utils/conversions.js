@@ -38,3 +38,26 @@ export const infoData = [
   },
 ];
 
+
+export const editData = [
+  {
+    id: UniqueID,
+    name: "Edit",
+    color: "text-[#6E6893]",
+  },
+  {
+    id: UniqueID,
+    name: "View Profile",
+    color: "text-[#6E6893]",
+  },
+  {
+    id: UniqueID,
+    name: "Activate User",
+    color: "text-green-800",
+  },
+  {
+    id: UniqueID,
+    name: "Delete",
+    color: "text-red-900",
+  },
+];
