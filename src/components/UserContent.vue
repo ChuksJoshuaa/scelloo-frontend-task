@@ -7,7 +7,6 @@
           <div class="w-[70%] overflow-x-auto text-sm md:text-lg">USER STATUS</div>
           <div class="w-[35%] overflow-x-auto text-sm md:text-lg">PAYMENT STATUS</div>
           <div class="w-[35%] overflow-x-auto text-sm md:text-lg">AMOUNT</div>
-          <!-- <div class="w-1/3 overflow-x-auto text-xs"></div> -->
           <div class="w-1/5 overflow-x-auto text-sm md:text-lg text-right px-5"><img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082353/More_v9ezsg.png" class="inline-block"></div>
       </div>
       <div v-for="item in data" :key="item.id" v-if="data.length > 0">
