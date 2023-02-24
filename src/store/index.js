@@ -10,6 +10,8 @@ const store = createStore({
       data: UserData,
       sortData: sortData,
       infoData: infoData,
+      chosenHeaderData: "All",
+      paymentStatusData: UserData,
     };
   },
 
@@ -29,6 +31,14 @@ const store = createStore({
     getInfoData(state) {
       return state.infoData;
     },
+
+    getChosenHeaderData(state) {
+      return state.chosenHeaderData;
+    },
+
+    getPaymentStatusData(state) {
+      return state.paymentStatusData;
+    },
   },
 
   actions: {
@@ -37,7 +47,7 @@ const store = createStore({
       commit("updateData", newData);
     },
 
-    async changePayment({ commit }, payload) {
+    async changePaymentAction({ commit }, payload) {
       const newData = await payload;
       commit("changePaymentStatus", newData);
     },
@@ -45,6 +55,11 @@ const store = createStore({
     async changeSortAction({ commit }, payload) {
       const newData = await payload;
       commit("changeSortData", newData);
+    },
+
+    async changeChosenHeaderAction({ commit }, payload) {
+      const newData = await payload;
+      commit("changeChosenHeaderData", newData);
     },
   },
 
@@ -60,13 +75,21 @@ const store = createStore({
     changePaymentStatus(state, payload) {
       console.log("changePaymentStatus");
       if (payload === "All") {
-        return (state.data = UserData);
+        state.data = UserData;
+        state.paymentStatusData = UserData;
+        return;
       } else {
         const newItem = UserData.filter(
           (item) => item.payment_status === payload
         );
-        return (state.data = newItem);
+        state.data = newItem;
+        state.paymentStatusData = newItem;
+        return;
       }
+    },
+
+    changeChosenHeaderData(state, payload) {
+      state.chosenHeaderData = payload;
     },
   },
 });

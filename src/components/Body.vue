@@ -81,10 +81,10 @@ export default {
         
     },
 
-    computed: mapGetters(["getSortData", "getInfoData", "getUserData"]),
+    computed: mapGetters(["getSortData", "getInfoData", "getUserData", "getPaymentStatusData"]),
 
     methods: {
-         ...mapActions(["setData", "changeSortAction"]),
+         ...mapActions(["setData", "changeSortAction",]),
         closeFilterButton() {
             this.showFilter = false
         },
@@ -103,7 +103,7 @@ export default {
 
             const chosenData = this.chosenSort
 
-            const sortData = _.sortBy(UserData, [
+            const sortData = _.sortBy(this.getUserData, [
                 function (o) {
                     if (chosenData === "First Name") {
                          return o.first_name;
@@ -141,9 +141,10 @@ export default {
 
 
         searchInput() {
-            let check = UserData
+            let check = this.getUserData
+            let randomCheck = this.getPaymentStatusData
             if (this.searchText.length == 0) {
-                this.setData(check)
+                this.setData(randomCheck)
             } else {
                 let regsearch = new RegExp(`${this.searchText}`, 'gi')
                 check = check.filter((x) => x.first_name.match(regsearch) || x.last_name.match(regsearch) || x.email.match(regsearch) || x.payment_date.match(regsearch) || x.due_date.match(regsearch))

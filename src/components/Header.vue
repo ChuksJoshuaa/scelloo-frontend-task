@@ -35,12 +35,13 @@ export default {
     },
 
     methods: {
-        ...mapActions(["changePayment"]),
+        ...mapActions(["changePaymentAction", "changeChosenHeaderAction"]),
 
         async handle(e) {
             this.chosenHeader = e.target.value
 
-            this.changePayment(this.chosenHeader)
+            this.changePaymentAction(this.chosenHeader)
+            this.changeChosenHeaderAction(this.chosenHeader)
         },
     }
 }

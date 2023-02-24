@@ -97,7 +97,6 @@ export default {
    watch: {
     data: function () {
        console.log(this.data)
-     
      },
 
     allChecked(val) { this.selected = val ? this.data.map(item => item) : [] }
