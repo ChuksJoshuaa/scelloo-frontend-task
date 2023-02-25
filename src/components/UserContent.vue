@@ -147,6 +147,7 @@ export default {
 
     removeEdit() {
       this.showEdit = false
+      this.choseEditName = 'Edit'
     },
 
     changeEdit(e) {
