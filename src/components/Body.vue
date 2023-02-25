@@ -202,14 +202,13 @@ export default {
       },
 
       yes() {
-        console.log("Pay due is about to be changed")
-
         //Send to the api endpoint labelled ‘mark-paid’.
         const filteredPaidFromUnpaid = this.getPayDue.filter((item) => item.payment_status !== 'Paid')
         if (filteredPaidFromUnpaid.length === 0) {
           alert('please check the unpaid or overdue box before clicking on pay dues')
         }
         else {
+          alert("Pay due is successful")
           console.log(filteredPaidFromUnpaid)
         }
       }
