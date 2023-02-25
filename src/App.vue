@@ -1,11 +1,7 @@
 <template>
-  <div class="container mx-auto">
-    <div class="mb-2">
-      <Header />
-    </div>
-    <div class="rounded-lg bg-white border border-gray-100 mt-7">
-      <Body />
-    </div>
+  <div class="main-container">
+    <Header />
+    <Body />
   </div>
 </template>
 

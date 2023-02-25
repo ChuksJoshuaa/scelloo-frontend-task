@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white h-full w-full">
+    <div class="bg-white h-full w-full rounded-lg border border-gray-100 mt-7">
         <div class="flex flex-wrap justify-between p-3 relative">
             <div class="flex mb-2">
                 <button  class="border border-[#C6C2DE] h-[50px] text-xl mr-4 rounded-lg w-24 text-[#25213B]" @click="chooseButton">
@@ -49,6 +49,7 @@
         <div>
           <UserContent :data="getUserData.slice(startnum, endnum + newNum)"/>
         </div>
+         
 
         <div v-if="searchText.length == 0" class="flex flex-nowrap gap-24 justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
             <div class="">Rows per page 
