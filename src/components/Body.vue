@@ -54,7 +54,6 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import UserContent from "./UserContent.vue";
-import { UserData } from "../utils/userData";
 import _ from "lodash"
 
 export default {

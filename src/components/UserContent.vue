@@ -7,10 +7,9 @@
           <div class="w-[70%] overflow-x-auto text-sm md:text-lg">USER STATUS</div>
           <div class="w-[35%] overflow-x-auto text-sm md:text-lg">PAYMENT STATUS</div>
           <div class="w-[35%] overflow-x-auto text-sm md:text-lg">AMOUNT</div>
-          <!-- <div class="w-1/3 overflow-x-auto text-xs"></div> -->
           <div class="w-1/5 overflow-x-auto text-sm md:text-lg text-right px-5"><img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082353/More_v9ezsg.png" class="inline-block"></div>
       </div>
-      <div v-for="item in data" :key="item.id">
+      <div v-for="item in data" :key="item.id" v-if="data.length > 0">
           <div class="flex flex-nowrap p-4 px-3 pt-3 overflow-x-auto border-b border-[#D9D5EC]" :class="showingdown && item.first_name === nameValue ? 'bg-[#F2F0F9]':''">
               <div class="w-1/3 overflow-x-auto text-sm md:text-lg">
                 <input type="checkbox" v-model="selected" :value="item"  class="p-2 w-5 h-5 rounded-md inline-block"/> 
@@ -34,11 +33,22 @@
               </div>
               <div class="w-1/4 overflow-x-auto text-md">{{ item.symbol }}{{ item.amount }} <br><span class="block pl-2 text-sm text-gray-400">{{ item.currency }}</span></div>
               <div class="w-1/3 overflow-x-auto">
-                <button class="p-2 list-button w-full text-right text-[#6E6893] gap-4 rounded-md" variant="success">
+                <div v-if="showEdit && item.first_name === editName">
+                  <div class="bg-white w-[180px] shadow border border-gray-400 h-auto absolute right-12 rounded-md">
+                      <div :class="(i.name === choseEditName ? 'bg-purple-100 font-semibold rounded-sm' : '')" v-for="i in getEditData" :key="i.id">
+                        <button :value="i.name" class="px-3 text-md md:text-lg font-medium" @click="changeEdit"
+                          :class="i.color">{{ i.name }}
+                        </button>
+                      </div>
+                      <button class="absolute top-[-0.6em] right-[-0.5em]" @click="removeEdit">
+                        <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082323/close_o0kgvc.png" class="inline-block w-7 h-7" />
+                      </button>
+                  </div>
+                </div>
+                <button v-else  :value="item.first_name" class="p-2 list-button w-full text-right text-[#6E6893] gap-4 rounded-md" variant="success" @focus="toggleEdit">
                   <span  class="inline-block mr-5">view more</span>
                   <img  src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082353/More_v9ezsg.png" class="inline-block"/> 
                 </button>
-                <!-- <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677082323/close_o0kgvc.png" class="inline-block w-5 h-5" /> -->
               </div>    
           </div>
         
@@ -69,6 +79,9 @@
               </div>
           </div>
       </div>
+      <div v-else class="text-center py-9 bg-[#F4F2FF]">
+         <h3 class="text-lg md:text-3xl">No Search Result</h3>
+      </div>
     </div>
 </template>
 
@@ -76,7 +89,7 @@
 
 
 <script>
-
+import { mapGetters } from "vuex";
 
 export default {
   name: "UserContent",
@@ -84,15 +97,19 @@ export default {
   data() {
     return {
       showingdown: false,
-      showactions: false,
+      showEdit: false,
       allChecked: false,
       nameValue: "",
       checkArray: [],
-      selected: []
+      selected: [],
+      editName: "",
+      choseEditName: "Edit"
     }
   },
 
   props: ["data"],
+
+  computed: mapGetters(["getEditData"]),
 
    watch: {
     data: function () {
@@ -113,6 +130,21 @@ export default {
         this.showingdown = !this.showingdown
       }
     },
+
+    toggleEdit(e) {
+      const value = e.target.value
+      this.editName = value
+      this.showEdit = true
+    },
+
+    removeEdit() {
+      this.showEdit = false
+    },
+
+    changeEdit(e) {
+      const value = e.target.value
+      this.choseEditName = value
+    }
   }
 }
 </script>
