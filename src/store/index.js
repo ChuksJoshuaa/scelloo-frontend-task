@@ -13,6 +13,7 @@ const store = createStore({
       chosenHeaderData: "All",
       paymentStatusData: UserData,
       editData: editData,
+      payDue: [],
     };
   },
 
@@ -44,6 +45,10 @@ const store = createStore({
     getEditData(state) {
       return state.editData;
     },
+
+    getPayDue(state) {
+      return state.payDue;
+    },
   },
 
   actions: {
@@ -65,6 +70,11 @@ const store = createStore({
     async changeChosenHeaderAction({ commit }, payload) {
       const newData = await payload;
       commit("changeChosenHeaderData", newData);
+    },
+
+    async changePayDueAction({ commit }, payload) {
+      const newData = await payload;
+      commit("changePayDue", newData);
     },
   },
 
@@ -94,6 +104,10 @@ const store = createStore({
 
     changeChosenHeaderData(state, payload) {
       state.chosenHeaderData = payload;
+    },
+
+    changePayDue(state, payload) {
+      state.payDue = payload;
     },
   },
 });

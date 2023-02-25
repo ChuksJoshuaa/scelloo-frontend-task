@@ -115,10 +115,10 @@ export default {
         
     },
 
-    computed: mapGetters(["getSortData", "getInfoData", "getUserData", "getPaymentStatusData"]),
+    computed: mapGetters(["getSortData", "getInfoData", "getUserData", "getPaymentStatusData", "getPayDue"]),
 
     methods: {
-         ...mapActions(["setData", "changeSortAction",]),
+         ...mapActions(["setData", "changeSortAction"]),
         closeFilterButton() {
             this.showFilter = false
         },
@@ -199,6 +199,19 @@ export default {
             this.setData(check)
           }
           
+      },
+
+      yes() {
+        console.log("Pay due is about to be changed")
+
+        //Send to the api endpoint labelled ‘mark-paid’.
+        const filteredPaidFromUnpaid = this.getPayDue.filter((item) => item.payment_status !== 'Paid')
+        if (filteredPaidFromUnpaid.length === 0) {
+          alert('please check the unpaid or overdue box before clicking on pay dues')
+        }
+        else {
+          console.log(filteredPaidFromUnpaid)
+        }
       }
 
     }
