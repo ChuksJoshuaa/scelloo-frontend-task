@@ -131,7 +131,7 @@ export default {
 
     watch: {
       newData: function () {
-        console.log(this.newData)
+        this.newData
       }
     },
 
@@ -185,17 +185,14 @@ export default {
         changeActiveUsers(e) {
             this.activeUsers = e.target.value
 
-            console.log(this.activeUsers)
-
             this.activeColor = 'bg-[#F4F2FF]'
 
             setTimeout(() => {
                 this.activeColor = ''
-            }, 1000);
+            }, 1500);
       },
 
       increaseNum() {
-        console.log(this.intervalnum) 
         this.newNum = this.intervalnum
       },
 
