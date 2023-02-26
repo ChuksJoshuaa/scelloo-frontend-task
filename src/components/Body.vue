@@ -47,21 +47,25 @@
         </div>
 
         <div>
-          <UserContent :data="getUserData.slice(startnum, endnum + newNum)"/>
+          <UserContent :data="getUserData.slice(startnum, newNum)"/>
+          <!-- <UserContent :data="newData.slice(startnum, endnum + newNum)"/> -->
         </div>
          
 
-        <div v-if="searchText.length == 0" class="flex flex-nowrap gap-24 justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
+        <div v-if="searchText.length === 0" class="flex flex-nowrap gap-24 justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
             <div class="">Rows per page 
               <select v-model="intervalnum" @change="increaseNum" class="bg-transparent">
                 <option v-for="(option, index) in pageNum" :key="index" :value="option" >{{ option }}</option>
               </select> 
             </div>
-            <div class="">{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < endnum ? getUserData.length : endnum }} of {{ getUserData.length }}</div>
-            <div class="flex gap-16"><button @click="pages > 1 ? pages = pages - 1 : pages = 1">
-            <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-fit"/></button> 
-            <button @click="pages < Math.ceil(getUserData.length / intervalnum) ? pages = pages + 1 : pages = Math.ceil(getUserData.length / intervalnum)">
-            <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-fit"/></button> </div>
+            <div >{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < newNum ? getUserData.length : newNum }} of {{ getUserData.length }}</div>
+            <div class="flex gap-16">
+              <button @click="prevPage" :disabled="getSetFalse">
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-fit cursor-pointer"/></button> 
+              <button @click="nextPage" :disabled="getSetFalse">
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-fit cursor-pointer"/>
+              </button>
+            </div>
         </div>
         <div v-else class="flex flex-nowrap gap-24 justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
             <div class="">Rows per page 
@@ -69,11 +73,15 @@
                   <option v-for="(option, index) in pageNum" :key="index" :value="option" >{{ option }}</option>
               </select> 
             </div>
-            <div class="">{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < endnum ? getUserData.length : endnum }} of {{ getUserData.length }}</div>
-            <div class="flex gap-16"><button @click="pages > 1 ? pages = pages - 1 : pages = 1">
-            <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-fit"/></button> 
-            <button @click="pages < Math.ceil(getUserData.length / intervalnum) ? pages = pages + 1 : pages = Math.ceil(getUserData.length / intervalnum)">
-            <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-fit"/></button> </div>
+              <div >{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < newNum ? getUserData.length : newNum }} of {{ getUserData.length }}</div>
+            <div class="flex gap-16">
+              <button @click="prevPage" :disabled="getSetFalse">
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-fit cursor-pointer"/>
+              </button> 
+              <button @click="nextPage" :disabled="getSetFalse">
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-fit cursor-pointer"/>
+              </button> 
+            </div>
         </div>
     </div>
 </template>
@@ -87,7 +95,7 @@ import _ from "lodash"
 export default {
     name: "Body",
 
-    components: { UserContent },
+  components: { UserContent },
 
     data() {
         return {
@@ -101,24 +109,37 @@ export default {
           endnum: 10,
           intervalnum: 10,
           pages: 1,
-          pageNum: [10, 25, 50, 100],
+          pageNum: [2, 4, 6, 8, 10],
           clearSearchLength: false,
-          newNum: 0,
+          newNum: 10,
+          newData: [],
         }
-    },
+  },
+
+   
 
 
     created() {
-        this.chosenSort = "Default"
-        this.activeUsers = "All"
+      this.chosenSort = "Default"
+      this.activeUsers = "All"
+  },
 
-        
+  mounted() {
+    this.newData = this.getPaginateData[this.getPage]
+    this.setData(this.newData)
+  },
+
+    watch: {
+      newData: function () {
+        console.log(this.newData)
+      }
     },
 
-    computed: mapGetters(["getSortData", "getInfoData", "getUserData", "getPaymentStatusData", "getPayDue"]),
+  computed: mapGetters(["getSortData", "getInfoData", "getUserData",
+    "getPaymentStatusData", "getPayDue", "getPaginateData", "getPage", "getChosenHeaderData", "getSetFalse"]),
 
     methods: {
-         ...mapActions(["setData", "changeSortAction"]),
+         ...mapActions(["setData", "changeSortAction", "prevPageAction", "nextPageAction", "changeChosenHeaderAction", "setFalseAction"]),
         closeFilterButton() {
             this.showFilter = false
         },
@@ -175,28 +196,29 @@ export default {
 
       increaseNum() {
         console.log(this.intervalnum) 
-        if (this.intervalnum <= 10) {
-          this.newNum = 0
-          this.endnum = 10
-        }
-        else {
-          this.newNum = this.intervalnum
-          this.endnum = this.getPaymentStatusData.length
-        }
+        this.newNum = this.intervalnum
       },
 
       searchInput() {
           let check = this.getUserData
           let randomCheck = this.getPaymentStatusData
-          let lengthy = this.getPaymentStatusData.length
         if (this.searchText.length === 0) {
-            randomCheck = randomCheck.slice(this.startnum, lengthy)
+            randomCheck = randomCheck.slice(this.startnum, this.endnum)
             this.setData(randomCheck)
+
+          if (this.getChosenHeaderData === 'All') {
+            this.setFalseAction(false)
+          }
+            
           } else {
             let regsearch = new RegExp(`${this.searchText}`, 'gi')
             check = check.filter((x) => x.first_name.match(regsearch) || x.last_name.match(regsearch) || x.email.match(regsearch) || x.payment_date.match(regsearch) || x.due_date.match(regsearch))
             check = check.slice(this.startnum, this.endnum)
-            this.setData(check)
+          this.setData(check)
+
+            if (check.length <= 10) {
+              this.setFalseAction(true)
+            }
           }
           
       },
@@ -211,8 +233,43 @@ export default {
           alert("Pay due is successful")
           console.log(filteredPaidFromUnpaid)
         }
-      }
+      },
 
+      nextPage() {
+          const newPage = () => {
+            let nextPage = this.getPage + 1;
+            if (nextPage > this.getPaginateData.length - 1) {
+                nextPage = 0;
+              }
+              return nextPage;
+          };
+
+        let index = newPage()
+        this.nextPageAction(index)
+
+
+        this.newData = this.getPaginateData[this.getPage]
+        this.changeChosenHeaderAction(this.getChosenHeaderData)
+        this.setData(this.newData)
+      },
+
+      prevPage() {
+        const newPage = () => {
+          let prevPage = this.getPage - 1;
+          if (prevPage < 0) {
+            prevPage = this.getPaginateData.length - 1;
+          }
+          return prevPage;
+        }
+
+        let index = newPage()
+
+        this.prevPageAction(index)
+
+        this.newData = this.getPaginateData[this.getPage]
+        this.changeChosenHeaderAction(this.getChosenHeaderData)
+        this.setData(this.newData)
+      },
     }
 }
 

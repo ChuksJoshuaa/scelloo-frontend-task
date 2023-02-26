@@ -14,6 +14,9 @@ const store = createStore({
       paymentStatusData: UserData,
       editData: editData,
       payDue: [],
+      paginateData: paginate(UserData),
+      page: 0,
+      setFalse: false,
     };
   },
 
@@ -22,8 +25,16 @@ const store = createStore({
       return state.getHeader;
     },
 
+    getPaginateData(state) {
+      return state.paginateData;
+    },
+
+    getSetFalse(state) {
+      return state.setFalse;
+    },
+
     getUserData(state) {
-      return state.data
+      return state.data;
     },
 
     getSortData(state) {
@@ -48,6 +59,10 @@ const store = createStore({
 
     getPayDue(state) {
       return state.payDue;
+    },
+
+    getPage(state) {
+      return state.page;
     },
   },
 
@@ -76,6 +91,21 @@ const store = createStore({
       const newData = await payload;
       commit("changePayDue", newData);
     },
+
+    async nextPageAction({ commit }, payload) {
+      const index = await payload;
+      commit("nextPage", index);
+    },
+
+    async prevPageAction({ commit }, payload) {
+      const index = await payload;
+      commit("prevPage", index);
+    },
+
+    async setFalseAction({ commit }, payload) {
+      const check = await payload;
+      commit("setFalseI", check);
+    },
   },
 
   mutations: {
@@ -89,8 +119,8 @@ const store = createStore({
 
     changePaymentStatus(state, payload) {
       if (payload === "All") {
-        state.data = UserData;
-        state.paymentStatusData = UserData;
+        state.data = state.paginateData[state.page];
+        state.paymentStatusData = state.paginateData[state.page];
         return;
       } else {
         const newItem = UserData.filter(
@@ -108,6 +138,18 @@ const store = createStore({
 
     changePayDue(state, payload) {
       state.payDue = payload;
+    },
+
+    nextPage(state, payload) {
+      state.page = payload;
+    },
+
+    prevPage(state, payload) {
+      state.page = payload;
+    },
+
+    setFalseI(state, payload) {
+      state.setFalse = payload;
     },
   },
 });

@@ -35,13 +35,21 @@ export default {
     },
 
     methods: {
-        ...mapActions(["changePaymentAction", "changeChosenHeaderAction"]),
+        ...mapActions(["changePaymentAction", "changeChosenHeaderAction", "setFalseAction"]),
 
         async handle(e) {
             this.chosenHeader = e.target.value
 
             this.changePaymentAction(this.chosenHeader)
             this.changeChosenHeaderAction(this.chosenHeader)
+
+            if (this.chosenHeader === "All") {
+                this.setFalseAction(false)
+            }
+
+            else {
+                this.setFalseAction(true)
+            }
         },
     }
 }
