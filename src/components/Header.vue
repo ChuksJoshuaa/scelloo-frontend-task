@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-2">
         <h2 class="uppercase text-gray-800 font-bold mb-5 pt-3 px-3 text-lg md:text-xl">Table heading</h2>
         <div class="flex justify-between border-b-2 border-gray-300 mt-3">
             <div class="flex justify-start">

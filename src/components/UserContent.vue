@@ -89,12 +89,13 @@
 
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "UserContent",
 
   data() {
+    
     return {
       showingdown: false,
       showEdit: false,
@@ -113,13 +114,20 @@ export default {
 
    watch: {
     data: function () {
-       console.log(this.data)
+       this.data
      },
 
-    allChecked(val) { this.selected = val ? this.data.map(item => item) : [] }
+     allChecked(val) { this.selected = val ? this.data.map(item => item) : [] },
+
+     selected: function () {
+       const yes = this.selected
+
+       this.changePayDueAction(yes)
+     }
   },
   
   methods: {
+    ...mapActions(["changePayDueAction"]),
     toggleShow(e) {
       const value = e.target.value
       this.nameValue = value
@@ -139,6 +147,7 @@ export default {
 
     removeEdit() {
       this.showEdit = false
+      this.choseEditName = 'Edit'
     },
 
     changeEdit(e) {

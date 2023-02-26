@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { HeaderData } from "../utils/header";
 import { UserData } from "../utils/userData";
-import { sortData, infoData, editData } from "../utils/conversions";
+import { sortData, infoData, editData, paginate } from "../utils/conversions";
 
 const store = createStore({
   state() {
@@ -12,7 +12,8 @@ const store = createStore({
       infoData: infoData,
       chosenHeaderData: "All",
       paymentStatusData: UserData,
-      editData: editData
+      editData: editData,
+      payDue: [],
     };
   },
 
@@ -22,7 +23,7 @@ const store = createStore({
     },
 
     getUserData(state) {
-      return state.data;
+      return state.data
     },
 
     getSortData(state) {
@@ -43,6 +44,10 @@ const store = createStore({
 
     getEditData(state) {
       return state.editData;
+    },
+
+    getPayDue(state) {
+      return state.payDue;
     },
   },
 
@@ -66,6 +71,11 @@ const store = createStore({
       const newData = await payload;
       commit("changeChosenHeaderData", newData);
     },
+
+    async changePayDueAction({ commit }, payload) {
+      const newData = await payload;
+      commit("changePayDue", newData);
+    },
   },
 
   mutations: {
@@ -78,7 +88,6 @@ const store = createStore({
     },
 
     changePaymentStatus(state, payload) {
-      console.log("changePaymentStatus");
       if (payload === "All") {
         state.data = UserData;
         state.paymentStatusData = UserData;
@@ -95,6 +104,10 @@ const store = createStore({
 
     changeChosenHeaderData(state, payload) {
       state.chosenHeaderData = payload;
+    },
+
+    changePayDue(state, payload) {
+      state.payDue = payload;
     },
   },
 });

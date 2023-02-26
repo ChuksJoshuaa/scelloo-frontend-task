@@ -68,6 +68,74 @@ export const UserData = [
     ],
   },
   {
+    first_name: "Obinna",
+    last_name: "Dick",
+    email: "obinnadick@example.net",
+    trx_id: 10983475,
+    user_status: "Active",
+    last_seen: "20/09/2022",
+    payment_status: "Unpaid",
+    payment_date: "12/12/2021",
+    due_date: "24/12/2021",
+    amount: 2123,
+    currency: "USD",
+    symbol: "$",
+    user_activity: [
+      {
+        date: "12/02/2021",
+        activity: "Made a Sales Order",
+        details:
+          "The User made a Purchase Order for 5 Goods and Payed via Card. The User also Paid for delivery via Courier services",
+      },
+      {
+        date: "10/02/2021",
+        activity: "Checked Price of Services",
+        details:
+          "The user navigated to the Pricing page of 'Anti-blue Reflection Glass' and checked the price of the Goods",
+      },
+      {
+        date: "2/02/2021",
+        activity: "User cancelled Order",
+        details:
+          "User requested Cancellation of Order on 3 goods citing reasons that 'Payment Gateway not responding",
+      },
+    ],
+  },
+  {
+    first_name: "Joy",
+    last_name: "Jane",
+    email: "joyjane@example.net",
+    trx_id: 10983475,
+    user_status: "Active",
+    last_seen: "20/09/2022",
+    payment_status: "Unpaid",
+    payment_date: "12/12/2021",
+    due_date: "24/12/2021",
+    amount: 2123,
+    currency: "USD",
+    symbol: "$",
+    user_activity: [
+      {
+        date: "12/02/2021",
+        activity: "Made a Sales Order",
+        details:
+          "The User made a Purchase Order for 5 Goods and Payed via Card. The User also Paid for delivery via Courier services",
+      },
+      {
+        date: "10/02/2021",
+        activity: "Checked Price of Services",
+        details:
+          "The user navigated to the Pricing page of 'Anti-blue Reflection Glass' and checked the price of the Goods",
+      },
+      {
+        date: "2/02/2021",
+        activity: "User cancelled Order",
+        details:
+          "User requested Cancellation of Order on 3 goods citing reasons that 'Payment Gateway not responding",
+      },
+    ],
+  },
+  {
     first_name: "Joseph",
     last_name: "Weaver",
     email: "sarahmiranda@example.net",
