@@ -205,16 +205,14 @@ export default {
         if (this.searchText.length === 0) {
             randomCheck = randomCheck.slice(this.startnum, this.endnum)
             this.setData(randomCheck)
-
-          if (this.getChosenHeaderData === 'All') {
-            this.setFalseAction(false)
-          }
-            
+            if (this.getChosenHeaderData === 'All') {
+              this.setFalseAction(false)
+            }
           } else {
-            let regsearch = new RegExp(`${this.searchText}`, 'gi')
-            check = check.filter((x) => x.first_name.match(regsearch) || x.last_name.match(regsearch) || x.email.match(regsearch) || x.payment_date.match(regsearch) || x.due_date.match(regsearch))
+            let searchResult = new RegExp(`${this.searchText}`, 'gi')
+            check = check.filter((item) => item.first_name.match(searchResult) || item.last_name.match(searchResult) || item.email.match(searchResult) || item.payment_date.match(searchResult) || item.due_date.match(searchResult))
             check = check.slice(this.startnum, this.endnum)
-          this.setData(check)
+            this.setData(check)
 
             if (check.length <= 10) {
               this.setFalseAction(true)
