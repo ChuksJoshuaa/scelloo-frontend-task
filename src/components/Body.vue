@@ -1,15 +1,18 @@
 <template>
     <div class="bg-white h-full w-full rounded-lg border border-gray-100 mt-7">
         <div class="flex flex-wrap justify-between p-3 relative">
-            <div class="flex mb-2">
-                <button  class="border border-[#C6C2DE] h-[50px] text-xl mr-4 rounded-lg w-24 text-[#25213B]" @click="chooseButton">
+            <div class="flex flex-wrap flex-row mb-2">
+                <button  class="border border-[#C6C2DE] h-[50px] mb-2 md:mb-0 text-xl mr-4 rounded-lg w-24 text-[#25213B]" @click="chooseButton">
                     <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060094/filter_r9w0yl.png" class="inline-block"/>
                      Filter
                 </button>
                 <div class="relative">
-                    <input v-model="searchText" @keyup="searchInput" class="p-3 pl-12 min-w-[200px] w-[250px] md:w-[550px] bg-gray-100 outline-0 focus:outline-0 hover:border hover:border-[#6D5BD0] rounded-lg" placeholder="Search User by Name, Email or Date">
+                    <input v-model="searchText" @keyup="searchInput" class="p-3 pl-12 w-[230px] sm:w-[310px] md:w-[550px] bg-gray-100 outline-0 focus:outline-0 hover:border hover:border-[#6D5BD0] rounded-lg" placeholder="Search User by Name, Email or Date">
                     <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060122/search_rstzys.png" class="absolute top-3 left-2 z-50">
                 </div>
+            </div>
+            <div class="">
+                <button class="p-3 bg-[#6D5BD0] text-white font-medium rounded-lg" @click="yes">PAY DUES</button>
             </div>
             <div v-if="showFilter" class="absolute z-40 bg-white border-2 border-gray-200 shadow w-[230px] h-auto mt-[8em] ml-[5em]">
                 <div class="flex justify-between py-3 px-3 items-center">
@@ -41,45 +44,41 @@
                     </div>
                 </div>
             </div>
-            <div class="">
-                <button class="p-3 bg-[#6D5BD0] text-white font-medium rounded-lg" @click="yes">PAY DUES</button>
-            </div>
         </div>
 
-        <div>
+        <div class="">
           <UserContent :data="getUserData.slice(startnum, newNum)"/>
-          <!-- <UserContent :data="newData.slice(startnum, endnum + newNum)"/> -->
         </div>
          
 
-        <div v-if="searchText.length === 0" class="flex flex-nowrap gap-24 justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
-            <div class="">Rows per page 
+        <div v-if="searchText.length === 0" class="flex flex-wrap gap-0 md:gap-24 justify-between md:justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
+            <div class="pb-3 md:pb-0 text-lg md:text-xl">Rows per page 
               <select v-model="intervalnum" @change="increaseNum" class="bg-transparent">
-                <option v-for="(option, index) in pageNum" :key="index" :value="option" >{{ option }}</option>
+                <option v-for="(option, index) in pageNum" :key="index" :value="option" class="">{{ option }}</option>
               </select> 
             </div>
-            <div >{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < newNum ? getUserData.length : newNum }} of {{ getUserData.length }}</div>
+            <div class="text-lg md:text-xl">{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < newNum ? getUserData.length : newNum }} of {{ getUserData.length }}</div>
             <div class="flex gap-16">
               <button @click="prevPage" :disabled="getSetFalse">
-                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-fit cursor-pointer"/></button> 
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-4 cursor-pointer"/></button> 
               <button @click="nextPage" :disabled="getSetFalse">
-                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-fit cursor-pointer"/>
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-4 cursor-pointer"/>
               </button>
             </div>
         </div>
-        <div v-else class="flex flex-nowrap gap-24 justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
-            <div class="">Rows per page 
+        <div v-else class="flex flex-wrap gap-0 md:gap-24 justify-between md:justify-end bg-[#F4F2FF] text-[#6E6893] p-6">
+            <div class="pb-3 md:pb-0 text-lg md:text-xl">Rows per page 
               <select v-model="intervalnum" class="bg-transparent">
                   <option v-for="(option, index) in pageNum" :key="index" :value="option" >{{ option }}</option>
               </select> 
             </div>
-              <div >{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < newNum ? getUserData.length : newNum }} of {{ getUserData.length }}</div>
+              <div class="text-lg md:text-xl">{{ getUserData.length > 0 ? startnum + 1 : 0 }} - {{ getUserData.length < newNum ? getUserData.length : newNum }} of {{ getUserData.length }}</div>
             <div class="flex gap-16">
               <button @click="prevPage" :disabled="getSetFalse">
-                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-fit cursor-pointer"/>
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060093/arrow-left_ggscnm.png" class="h-4 cursor-pointer"/>
               </button> 
               <button @click="nextPage" :disabled="getSetFalse">
-                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-fit cursor-pointer"/>
+                <img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1677060098/arrow-right_l2w7bb.png" class="h-4 cursor-pointer"/>
               </button> 
             </div>
         </div>
